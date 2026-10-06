@@ -40,12 +40,3 @@ def classify_email(email):
     return json.loads(generated_text)
 
 
-if __name__ == "__main__":
-    email = """
-    I sent my shoes back about two weeks ago and still haven't seen
-    the money returned to my account. Could you check on the refund?
-    """
-
-    result = classify_email(email)
-
-    print(result)
