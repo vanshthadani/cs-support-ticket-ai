@@ -109,11 +109,11 @@ if st.button("Analyze Email", type="primary"):
 
         st.divider()
 
-        # Issue
+        
         st.write("**Issue**")
         st.info(result["issue"])
 
-        # Action
+        
         col1, col2 = st.columns(2)
 
         with col1:
