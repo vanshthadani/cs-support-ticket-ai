@@ -1,56 +1,50 @@
 # Customer Support AI
 
-A fine-tuned small language model that converts customer-support emails into structured support tickets.
+A small fine-tuned LLM that turns customer support emails into structured support tickets.
 
-Built with **Qwen2.5-0.5B-Instruct + LoRA + Unsloth**, with a Streamlit interface for inference.
+Built with **Qwen2.5-0.5B-Instruct, LoRA, Unsloth and Streamlit.**
 
-## Demo
+## What it does
 
-The model takes a natural-language customer email and produces a structured ticket containing:
+Give it a customer support email and it extracts things like:
 
-* Category & subcategory
+* Category and subcategory
 * Urgency
 * Sentiment
 * Customer satisfaction
 * Detected product
-* Issue summary
+* Issue
 * Requested action
-* Human-escalation requirement
+* Whether a human is required
 
-![Example 1](screenshots/screenshot-1.png)
+The output is returned as structured JSON.
 
-![Example 2](screenshots/screenshot-2.png)
+## Screenshots
 
-## How It Works
+![Screenshot 1](screenshots/screenshot-1.png)
 
-```text
-Customer Email
-      ↓
-Qwen2.5-0.5B + LoRA
-      ↓
-Structured JSON Ticket
-      ↓
-Streamlit UI
-```
+![Screenshot 2](screenshots/screenshot-2.png)
 
-## Model & Training
+## The V1 → V4 Journey
 
-* **Base model:** Qwen/Qwen2.5-0.5B-Instruct
+This project went through a few iterations rather than getting everything right on the first try.
+
+**V1** — First working version with a small synthetic dataset.
+
+**V2** — Expanded the dataset and improved the training data.
+
+**V3** — Refined the dataset and prompts, improving the model's consistency.
+
+**V4** — Final version with better taxonomy rules, clearer instructions and more carefully generated examples.
+
+Training loss went from roughly **0.50 in V1 → 0.20 in V4.**
+
+## Model
+
+* **Base:** Qwen/Qwen2.5-0.5B-Instruct
 * **Fine-tuning:** LoRA
-* **Training framework:** Unsloth + TRL
-* **Dataset:** Synthetic customer-support emails generated with an LLM
-* **Final version:** V4
-* **Final training loss:** ~0.20
-
-The model was iteratively improved from V1 → V4 by refining the dataset, taxonomy rules, and generation instructions.
-
-## Evaluation
-
-A blind test using **10 previously unseen customer-support emails** achieved:
-
-**9.5 / 10 (95%)**
-
-The evaluation focused on the correctness of the structured ticket fields rather than simply matching the wording of the generated issue summary.
+* **Training:** Unsloth + TRL
+* **Interface:** Streamlit
 
 ## Project Structure
 
@@ -58,26 +52,28 @@ The evaluation focused on the correctness of the structured ticket fields rather
 cs-support-ticket-ai/
 ├── app.py
 ├── inference/
-├── training/
-├── data/
-├── screenshots/
+│   ├── classifier.py
+│   └── model.py
+├── Training/
+├── Datasets/
 ├── requirements.txt
+├── .gitignore
 └── README.md
 ```
 
-## Run Locally
+## Run
 
 ```bash
 pip install -r requirements.txt
 streamlit run app.py
 ```
 
-> Training code and the final dataset are included in the repository to document the complete model-development process.
+The `Training` and `Datasets` folders contain the work used to build the final model.
+`Training` Contains `Dataset_Generation.ipynb` , where the dataset was generated via Grok and
+`Emails_LLM_v4` where the base model was fine-tuned.
+`Datasets` contains `raw_emails.jsonl` which is the data grok generated and `emails.jsonl` , same data formatted for finetuning.
 
-## Tech Stack
-
-**Python · PyTorch · Transformers · Qwen · LoRA · Unsloth · TRL · Streamlit**
 
 ---
 
-Built as a practical AI engineering project focused on fine-tuning, inference, structured outputs, and integrating an LLM into a usable application.
+Made as a practical AI/ML engineering project to learn the full process of **dataset generation → fine-tuning → inference → application**.
