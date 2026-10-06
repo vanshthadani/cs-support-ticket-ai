@@ -9,6 +9,7 @@ st.write("Turn customer emails into structured support tickets.")
 
 
 # Example emails
+
 example_emails = {
     "Refund Pending": """Hi,
 
@@ -44,7 +45,7 @@ selected_example = st.selectbox(
 )
 
 
-# Put selected example into the text area
+
 default_email = ""
 
 if selected_example != "None":
@@ -71,7 +72,7 @@ if st.button("Analyze Email", type="primary"):
         st.divider()
         st.subheader("Support Ticket")
 
-        # Ticket overview
+        
         col1, col2, col3 = st.columns([1.5, 1.5, 1])
 
         with col1:
@@ -91,7 +92,7 @@ if st.button("Analyze Email", type="primary"):
 
         st.divider()
 
-        # Customer state
+        
         col1, col2, col3 = st.columns(3)
 
         with col1:
