@@ -61,36 +61,42 @@ invented details):
 Example — email: *"I ordered a blue hoodie in medium, but the package contains 
 a red hoodie. I need the correct item sent to me."*
 
-- **Base model's output :**
-- ```json
+### Base vs Fine-tuned Model
+
+**Base model output:**
+
+````json
 {
-  "ticket_id": "123456",
-  "status": "open",
-  "priority": "high",
-  "description": "Customer received an incorrect item in their order. They requested the correct item.",
-  "customer_name": "John Doe",
-  "customer_email": "johndoe@example.com",
-  "product_name": "medium blue hoodie",
-  "product_description": "A medium-sized blue hoodie with a red sleeve.",
-  "product_price": "$100",
-  "order_date": "2023-09-07",
-  "order_status": "delivered",
-  "delivery_notes": "The package contained a red hoodie instead of the expected medium blue hoodie.",
-  "solution": {
-    "item_to_send": "medium blue hoodie",
-    "expected_delivery_date": "2023-10-01"
-  },
-  "resolution_timeframe": "next day
-- invented a customer name, email address, order date, and price 
-  — none of which appeared in the email.
-- **Fine-tuned model's output : **
--{"category": "Product Issue", "subcategory": "Wrong Item", "urgency": 5, "sentiment": "FRUSTRATED", "customer_satisfaction": "DISSATISFIED", "detected_product": "blue hoodie", "issue": "Received wrong product (red hoodie instead of blue hoodie).", "requested_action": "Exchange", "requires_human": true}
-- output only grounded fields: `category: Product Issue`, 
-  `subcategory: Wrong Item`, `detected_product: blue hoodie`, with no fabricated details.
+  "output": "```json\n{\n  \"ticket_id\": \"123456\",\n  \"status\": \"open\",\n  \"priority\": \"high\",\n  \"description\": \"Customer received an incorrect item in their order. They requested the correct item.\",\n  \"customer_name\": \"John Doe\",\n  \"customer_email\": \"johndoe@example.com\",\n  \"product_name\": \"medium blue hoodie\",\n  \"product_description\": \"A medium-sized blue hoodie with a red sleeve.\",\n  \"product_price\": \"$100\",\n  \"order_date\": \"2023-09-07\",\n  \"order_status\": \"delivered\",\n  \"delivery_notes\": \"The package contained a red hoodie instead of the expected medium blue hoodie.\",\n  \"solution\": {\n    \"item_to_send\": \"medium blue hoodie\",\n    \"expected_delivery_date\": \"2023-10-01\"\n  },\n  \"resolution_timeframe\": \"next day\"\n}\n```"
+}
+````
+
+The base model invented a customer name, email address, order date, price, delivery date, and other details that were never present in the email.
+
+**Fine-tuned model output:**
+
+```json
+{
+  "output": {
+    "category": "Product Issue",
+    "subcategory": "Wrong Item",
+    "urgency": 5,
+    "sentiment": "FRUSTRATED",
+    "customer_satisfaction": "DISSATISFIED",
+    "detected_product": "blue hoodie",
+    "issue": "Received wrong product (red hoodie instead of blue hoodie).",
+    "requested_action": "Exchange",
+    "requires_human": true
+  }
+}
+```
+
+The fine-tuned model produced a structured ticket using only information grounded in the email, without fabricating unrelated customer or order details.
+
 
 **Takeaway**: the base model can produce JSON, but without fine-tuning it doesn't 
 reliably follow a fixed schema and tends to hallucinate plausible-sounding details 
-not present in the source text. Fine-tuning on ~[however many] labeled examples 
+not present in the source text. Fine-tuning on 608 labeled examples 
 taught the model to consistently follow the schema and stay grounded in the actual 
 email content — to the point where it no longer needs an explicit JSON instruction 
 in the prompt to do so.
