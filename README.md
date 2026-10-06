@@ -64,8 +64,9 @@ a red hoodie. I need the correct item sent to me."*
 ### Base vs Fine-tuned Model
 
 **Base model output:**
-
+```json
 ```json { "ticket_id": "123456", "status": "open", "priority": "high", "description": "Customer received an incorrect item in their order. They requested the correct item.", "customer_name": "John Doe", "customer_email": "johndoe@example.com", "product_name": "medium blue hoodie", "product_description": "A medium-sized blue hoodie with a red sleeve.", "product_price": "$100", "order_date": "2023-09-07", "order_status": "delivered", "delivery_notes": "The package contained a red hoodie instead of the expected medium blue hoodie.", "solution": { "item_to_send": "medium blue hoodie", "expected_delivery_date": "2023-10-01" }, "resolution_timeframe": "next day
+```
 
 The base model invented a customer name, email address, order date, price, delivery date, and other details that were never present in the email.
 
