@@ -1,0 +1,79 @@
+# Customer Support AI
+
+A small fine-tuned LLM that turns customer support emails into structured support tickets.
+
+Built with **Qwen2.5-0.5B-Instruct, LoRA, Unsloth and Streamlit.**
+
+## What it does
+
+Give it a customer support email and it extracts things like:
+
+* Category and subcategory
+* Urgency
+* Sentiment
+* Customer satisfaction
+* Detected product
+* Issue
+* Requested action
+* Whether a human is required
+
+The output is returned as structured JSON.
+
+## Screenshots
+
+![Screenshot 1](screenshots/screenshot-1.png)
+
+![Screenshot 2](screenshots/screenshot-2.png)
+
+## The V1 → V4 Journey
+
+This project went through a few iterations rather than getting everything right on the first try.
+
+**V1** — First working version with a small synthetic dataset.
+
+**V2** — Expanded the dataset and improved the training data.
+
+**V3** — Refined the dataset and prompts, improving the model's consistency.
+
+**V4** — Final version with better taxonomy rules, clearer instructions and more carefully generated examples.
+
+Training loss went from roughly **0.50 in V1 → 0.20 in V4.**
+
+## Model
+
+* **Base:** Qwen/Qwen2.5-0.5B-Instruct
+* **Fine-tuning:** LoRA
+* **Training:** Unsloth + TRL
+* **Interface:** Streamlit
+
+## Project Structure
+
+```text
+cs-support-ticket-ai/
+├── app.py
+├── inference/
+│   ├── classifier.py
+│   └── model.py
+├── Training/
+├── Datasets/
+├── requirements.txt
+├── .gitignore
+└── README.md
+```
+
+## Run
+
+```bash
+pip install -r requirements.txt
+streamlit run app.py
+```
+
+The `Training` and `Datasets` folders contain the work used to build the final model.
+`Training` Contains `Dataset_Generation.ipynb` , where the dataset was generated via Grok and
+`Emails_LLM_v4` where the base model was fine-tuned.
+`Datasets` contains `raw_emails.jsonl` which is the data grok generated and `emails.jsonl` , same data formatted for finetuning.
+
+
+---
+
+Made as a practical AI/ML engineering project to learn the full process of **dataset generation → fine-tuning → inference → application**.
