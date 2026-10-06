@@ -21,9 +21,9 @@ The output is returned as structured JSON.
 
 ## Screenshots
 
-![Screenshot 1](screenshots/screenshot-1.png)
+![Screenshot 1](Screenshots/sample_1.png)
 
-![Screenshot 2](screenshots/screenshot-2.png)
+![Screenshot 2](Screenshots/sample_2.png)
 
 ## The V1 → V4 Journey
 
